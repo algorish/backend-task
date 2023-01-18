@@ -46,9 +46,6 @@ const Profile = () => {
   useEffect(() => {
     (async () => {
       try {
-        // if token not found, show alert
-        if (!token) return alert("Session Expired");
-
         let profileData = await fetchProfile(token);
         dispatch({ type: "SET_DATA", payload: profileData });
       } catch (e) {
