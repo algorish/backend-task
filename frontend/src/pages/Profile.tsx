@@ -34,6 +34,9 @@ function reducer(state: StateType, action: ActionType) {
   }
 }
 
+let cancelAuthorReq: any;
+let cancelQuoteReq: any;
+
 const Profile = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -58,14 +61,20 @@ const Profile = () => {
   // handling author and quoute api calls
   const handleAuthorQuoteCalls = async () => {
     setShowModal(true);
-    let authorResponse = await fetchAuthor(token);
+    let authorResponse = await fetchAuthor(token, cancelAuthorReq);
     if (authorResponse) {
       dispatch({ type: "SET_DATA", payload: { hasAuthorRespone: true } });
     }
-    let quoteResponse = await fetchQuote(token);
+    let quoteResponse = await fetchQuote(token, cancelQuoteReq);
     if (quoteResponse) {
       dispatch({ type: "SET_DATA", payload: { hasQuoteResponse: true } });
     }
+  };
+
+  // Canceling request using cancle token
+  const handleCancleRequest = () => {
+    cancelAuthorReq("Canceling the author request");
+    cancelQuoteReq("Canceling the quote request");
   };
 
   return (
@@ -107,6 +116,7 @@ const Profile = () => {
         setOpen={setShowModal}
         isAuthorFetched={state.hasAuthorRespone}
         isQuoteFetched={state.hasQuoteResponse}
+        cancleRequest={handleCancleRequest}
       />
     </>
   );

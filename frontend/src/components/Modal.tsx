@@ -6,6 +6,7 @@ type ModalPopupProps = {
   setOpen: any;
   isAuthorFetched?: boolean;
   isQuoteFetched?: boolean;
+  cancleRequest?: any;
 };
 
 const ModalPopup = ({
@@ -13,9 +14,11 @@ const ModalPopup = ({
   setOpen,
   isAuthorFetched,
   isQuoteFetched,
+  cancleRequest,
 }: ModalPopupProps) => {
   const handleCancel = () => {
     setOpen(false);
+    cancleRequest() // canceling request on close
   };
   return (
     <Modal
